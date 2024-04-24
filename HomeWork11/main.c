@@ -56,12 +56,12 @@ int main(int argc, char *argv[]){
 
     struct sensor_temp *date_in;
     
-    if (month==0){
-        stat_all();
-    }
-    else{
-        stat_month();
-    }
+    // if (month==0){
+    //     stat_all(*file_in);
+    // }
+    // else{
+    //     stat_month();
+    // }
     fclose(file_in);
 
     return 0;

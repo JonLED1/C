@@ -5,7 +5,7 @@
             "name": "(gdb) Зап",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/main.exe",
+            "program": "C:\\Git\\GB_C\\HomeWork11\\main.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
