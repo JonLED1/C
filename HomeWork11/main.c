@@ -33,13 +33,8 @@ int main(int argc, char *argv[]){
         return 0;
     }
 
-    if (month==0){
-        stat_all(file_name);
-    }
-    // else{
-    //     stat_month();
-    // }
-    
+    stat_all(file_name, month);
+
 
     return 0;
 }
