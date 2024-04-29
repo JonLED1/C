@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "temp_functions.h"
-#define SIZE 600000
+#define SIZE 600000 //max line in file
+#define MAX_TEMP 1000
+#define MIN_TEMP -270
+
 struct sensor_temp {
     int year;
     int month;
@@ -70,8 +73,8 @@ void stat_output(char *file_name, int month){
     printf("\nTotal read errors %d lines.\n", count_err_read);
     printf("Total invalid data %d lines.\n\n", count_err_data);
 
-    int month_max=-270;
-    int month_min=1000;
+    int month_max=MIN_TEMP;
+    int month_min=MAX_TEMP;
     int month_sum=0, count_month=0, i=0;
     float year_sum=0;
     printf("  Year\tMonth\tMonthAvg\tMonthMax\tMonthMin\n");
@@ -92,8 +95,8 @@ void stat_output(char *file_name, int month){
     }
 
     //output stat all month
-    int year_max=-270;
-    int year_min=1000;
+    int year_max=MIN_TEMP;
+    int year_min=MAX_TEMP;
     month=1;
     for (i; i<count_valid_str; i++){
         if (date_in[i].month==month){
@@ -127,6 +130,6 @@ int check_valid_date(int year, int mon, int day, int hour, int min, int temp){
     if (day<1 || day>31) return 0;
     if (hour<0 || hour>24) return 0;
     if (min<0 || min>59) return 0;
-    if (temp<-270 || temp>1000) return 0;
+    if (temp<MIN_TEMP || temp>MAX_TEMP) return 0;
     return 1;
 }
