@@ -3,6 +3,7 @@
 #include <string.h>
 #include "temp_functions.h"
 
+
 int main(int argc, char *argv[]){
 
     //no command
@@ -33,7 +34,7 @@ int main(int argc, char *argv[]){
         return 0;
     }
 
-    stat_all(file_name, month);
+    stat_output(file_name, month);
 
 
     return 0;

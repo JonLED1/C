@@ -2,6 +2,14 @@
 #include <stdlib.h>
 #include "temp_functions.h"
 #define SIZE 600000
+struct sensor_temp {
+    int year;
+    int month;
+    int day;
+    int hour;
+    int min;
+    int temp;
+};
 
 void print_help(void){
     printf ("\n\nProgramm for calculate average temperature.\n");
@@ -16,21 +24,10 @@ void print_help_small(void){
     printf("ERROR! Invalid command! Please, run with key -h for help.\n\n");
 }
 
-void stat_all(char *file_name, int month){
-    struct sensor_temp {
-        int year;
-        int month;
-        int day;
-        int hour;
-        int min;
-        int temp;
-    };
-    struct sensor_temp *date_in = malloc(SIZE * sizeof(struct sensor_temp));
+void stat_output(char *file_name, int month){
+    //open file
     FILE *file_in;
     file_in=fopen(file_name, "r");
-    int count_valid_date=0, count_err_read=0, count_err_data=0, count_line_file=1;
-    char line[25]; //line in file
-    int year, mon, day, hour, min, temp; //temp var for read
 
     //check file
     if (!file_in){
@@ -42,21 +39,25 @@ void stat_all(char *file_name, int month){
     };
 
     //read file and fill array struct
+    struct sensor_temp *date_in = malloc(SIZE * sizeof(struct sensor_temp));
+    int count_valid_str=0, count_err_read=0, count_err_data=0, count_line_file=1;
+    char line[25]; //line in file
+    int year, mon, day, hour, min, temp; //temp var for read
     while (fgets(line, sizeof(line), file_in) != NULL){
         if (sscanf(line, "%d;%d;%d;%d;%d;%d", &year, &mon, &day, &hour, &min, &temp ) == 6){
             if (check_valid_date(year, mon, day, hour, min, temp) == 1){
-                date_in[count_valid_date].year=year;
-                date_in[count_valid_date].month=mon;
-                date_in[count_valid_date].day=day;
-                date_in[count_valid_date].hour=hour;
-                date_in[count_valid_date].min=min;
-                date_in[count_valid_date].temp=temp;
+                date_in[count_valid_str].year=year;
+                date_in[count_valid_str].month=mon;
+                date_in[count_valid_str].day=day;
+                date_in[count_valid_str].hour=hour;
+                date_in[count_valid_str].min=min;
+                date_in[count_valid_str].temp=temp;
             }
             else{
                 printf("Invalid data! In line-%d %s",count_line_file, line);
                 count_err_data++;
             };
-            count_valid_date++;
+            count_valid_str++;
         }
         else{
             printf("Read error! In line-%d %s",count_line_file, line);
@@ -64,14 +65,59 @@ void stat_all(char *file_name, int month){
         };
         count_line_file++;
     }
+    fclose(file_in);
+
     printf("\nTotal read errors %d lines.\n", count_err_read);
     printf("Total invalid data %d lines.\n\n", count_err_data);
 
-    get_stat(month);
-
+    int month_max=-270;
+    int month_min=1000;
+    int month_sum=0, count_month=0, i=0;
+    float year_sum=0;
     printf("  Year\tMonth\tMonthAvg\tMonthMax\tMonthMin\n");
 
-    fclose(file_in);
+    //output stat for month
+    if (month!=0){
+        for (i; i<count_valid_str; i++){
+            if (date_in[i].month==month){
+                if (month_max<date_in[i].temp) month_max=date_in[i].temp;
+                if (month_min>date_in[i].temp) month_min=date_in[i].temp;
+                month_sum+=date_in[i].temp;
+                count_month++;
+            }
+        }
+        printf("  %d\t%d\t%d\t\t%d\t\t%d\n",date_in[i-1].year, month, month_sum/count_month, month_max, month_min);
+        free(date_in);
+        exit(0);
+    }
+
+    //output stat all month
+    int year_max=-270;
+    int year_min=1000;
+    month=1;
+    for (i; i<count_valid_str; i++){
+        if (date_in[i].month==month){
+            if (month_max<date_in[i].temp) month_max=date_in[i].temp;
+            if (month_min>date_in[i].temp) month_min=date_in[i].temp;
+            month_sum+=date_in[i].temp;
+            count_month++;
+        }
+        else{
+            printf("  %d\t%d\t%d\t\t%d\t\t%d\n",date_in[i-1].year, date_in[i-1].month, month_sum/count_month, month_max, month_min);
+            month++;
+            month_max=date_in[i].temp;
+            month_min=date_in[i].temp;
+            month_sum=date_in[i].temp;
+            count_month=1;
+        }
+        if (year_max<date_in[i].temp) year_max=date_in[i].temp;
+        if (year_min>date_in[i].temp) year_min=date_in[i].temp;
+        year_sum+=date_in[i].temp;
+
+    }
+    printf("  %d\t%d\t%d\t\t%d\t\t%d\n",date_in[i-1].year, date_in[i-1].month, month_sum/count_month, month_max, month_min);//output last month
+    printf("Year statistics: average is %.2f, max is %d, min is %d", year_sum/count_valid_str, year_max, year_min);
+
     free(date_in);
 }
 
@@ -84,12 +130,3 @@ int check_valid_date(int year, int mon, int day, int hour, int min, int temp){
     if (temp<-270 || temp>1000) return 0;
     return 1;
 }
-
-
-
-
-
-
-    // count_valid_date=3;
-    // printf("  %d\t%d\t%d\t%d\t%d\t%d\t%d\n", count_valid_date, date_in[count_valid_date].year,
-    //  date_in[count_valid_date].month, date_in[count_valid_date].day, date_in[count_valid_date].hour, date_in[count_valid_date].min, date_in[count_valid_date].temp);

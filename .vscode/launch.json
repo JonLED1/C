@@ -6,7 +6,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/main.exe",
-            "args": [],
+            "args": ["-f", "${workspaceFolder}/temperature_small.csv"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
