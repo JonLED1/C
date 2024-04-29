@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
-#include <string.h>
+#include <stdlib.h>
 #include "temp_functions.h"
 
 
@@ -35,7 +35,6 @@ int main(int argc, char *argv[]){
     }
 
     stat_output(file_name, month);
-
 
     return 0;
 }
