@@ -75,7 +75,7 @@ void print_drone(char matrix2[MAX_X][MAX_Y]){
     for (int i=1; i<MAX_Y; i++){
         for (int j=1; j<MAX_X; j++){
             if (matrix2[i][j]=='X'){
-				printf("\x1b[31m%c\x1b[0m", 'Q');
+				printf("\x1b[31m%c\x1b[0m", matrix2[i][j]);
             }
         }
 		printf("\n");

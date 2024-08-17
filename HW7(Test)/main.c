@@ -11,7 +11,7 @@
 void main(){
     int game_mode=0;
     char matrix[MAX_X][MAX_Y]; //слой поля с тыквами
-    char matrix2[MAX_X][MAX_Y]=' '; //слой дронов
+    char matrix2[MAX_X][MAX_Y]={' '}; //слой дронов
     int score[6]={0};
 
     while(1){
