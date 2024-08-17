@@ -4,6 +4,10 @@
     "files.associations": {
         "random": "c",
         "limits": "c",
-        "*.tcc": "c"
+        "*.tcc": "c",
+        "menu.h": "c",
+        "conio.h": "c",
+        "field.h": "c",
+        "drone.h": "c"
     }
 }
