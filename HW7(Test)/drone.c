@@ -65,16 +65,6 @@ void move_drone(char matrix2[MAX_X][MAX_Y], drone_t *drone){
 		}
 	}
 	matrix2[drone->x][drone->y]='X';
-	for (int i=0; i<MAX_Y+7; i++){
-		printf ("\033[A");
-	}
-    for (int i=1; i<MAX_Y; i++){
-        for (int j=1; j<MAX_X; j++){
-			printf("%c", matrix2[i][j]);
-        }
-		printf("\n");
-    }
-	printf("%d %d", drone->x, drone->y);
 	return;
 }
 

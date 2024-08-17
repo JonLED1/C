@@ -11,13 +11,9 @@
 void main(){
     int game_mode=0;
     char matrix[MAX_X][MAX_Y]; //слой поля с тыквами
-    char matrix2[MAX_X][MAX_Y]; //слой дронов
+    char matrix2[MAX_X][MAX_Y]=' '; //слой дронов
     int score[6]={0};
-    for (int i=1; i<MAX_Y; i++){
-        for (int j=1; j<MAX_X; j++){
-			matrix2[i][j]='`';
-        }
-    }
+
     while(1){
         start_screen();
         game_mode=main_menu();
@@ -28,9 +24,9 @@ void main(){
         //     drone_t drone1=init_drone(STOP, 10,10,0);}
 
         while(1){
-            //print_field(matrix);
+            print_field(matrix);
             move_drone(matrix2, &drone0);
-            //print_drone(matrix2);
+            print_drone(matrix2);
             game_menu(game_mode, score);
             ripening_pumpkis(matrix);
 
