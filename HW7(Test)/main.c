@@ -8,25 +8,23 @@
 #include "field.h"
 #include "drone.h"
 
+
+
 void main(){
     int game_mode=0;
-    char matrix[MAX_X][MAX_Y]; //слой поля с тыквами
-    char matrix2[MAX_X][MAX_Y]={' '}; //слой дронов
+    char matrix[MAX_X][MAX_Y];
     int score[6]={0};
-
+    
     while(1){
         start_screen();
         game_mode=main_menu();
         clear_screen();
         fill_field(matrix);
-        drone_t drone0=init_drone(STOP, 10,10,0);
-        // if (game_mode>0) {
-        //     drone_t drone1=init_drone(STOP, 10,10,0);}
+        drone_t drone0=init_drone(STOP,0,0);
 
         while(1){
+            move_drone(matrix, &drone0);
             print_field(matrix);
-            move_drone(matrix2, &drone0);
-            print_drone(matrix2);
             game_menu(game_mode, score);
             ripening_pumpkis(matrix);
 
@@ -51,7 +49,7 @@ void main(){
                 }
 				if (ch=='q' || ch=='Q') break;;
             }
-            delay(300);
+            delay(500);
         }
     }
 }
