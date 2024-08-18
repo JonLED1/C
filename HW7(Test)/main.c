@@ -13,6 +13,7 @@
 void main(){
     int game_mode=0;
     char matrix[MAX_X][MAX_Y];
+    char matrix2[MAX_X][MAX_Y];
     int score[6]={0};
     
     while(1){
@@ -20,11 +21,15 @@ void main(){
         game_mode=main_menu();
         clear_screen();
         fill_field(matrix);
-        drone_t drone0=init_drone(STOP,0,0);
+        fill_drone(matrix2);
+        drone_t drone0=init_drone(STOP,10,10,0);
 
         while(1){
-            move_drone(matrix, &drone0);
+            
+            move_drone(matrix2, &drone0);
             print_field(matrix);
+            print_drone(matrix2);
+                    
             game_menu(game_mode, score);
             ripening_pumpkis(matrix);
 
@@ -49,7 +54,7 @@ void main(){
                 }
 				if (ch=='q' || ch=='Q') break;;
             }
-            delay(500);
+            delay(300);
         }
     }
 }

@@ -7,17 +7,28 @@ typedef struct {
 	int direction;
 	int x;
 	int y;
+	int pumpkins;
 }  drone_t;
 
-drone_t init_drone(int direction, int x, int y){
+drone_t init_drone(int direction, int x, int y, int pumpkins){
 	drone_t drone;
 	drone.direction=direction;
 	drone.x = x;
 	drone.y = y;
+	drone.pumpkins = pumpkins;
 	return drone;
 }
 
-void move_drone(char matrix[MAX_X][MAX_Y], drone_t *drone){
+void fill_drone(char matrix2[MAX_X][MAX_Y]){
+	for (int i=0; i<MAX_X; i++){
+        for (int j=0; j<MAX_Y; j++){
+            matrix2[i][j]=' ';
+        }
+    }
+}
+
+void move_drone(char matrix2[MAX_X][MAX_Y], drone_t *drone){
+	matrix2[drone->x][drone->y]=' ';
 	if (drone->direction==UP){
 		drone->x = drone->x - 1;	
 		if (drone->x < 0){
@@ -42,6 +53,23 @@ void move_drone(char matrix[MAX_X][MAX_Y], drone_t *drone){
 			drone->y = 0;
 		}
 	}
-	matrix[drone->x][drone->y]='X';
+	matrix2[drone->x][drone->y]='X';
 	return;
+}
+
+void print_drone(char matrix2[MAX_X][MAX_Y]){
+	for (int i=0; i<MAX_Y+7; i++){
+		printf ("\033[A");
+	}
+    for (int i=0; i<MAX_X; i++){
+        for (int j=0; j<MAX_Y; j++){
+            if (matrix2[i][j]=='X'){
+				printf("\x1b[31m%c\x1b[0m", matrix2[i][j]);
+            }
+			else{
+				printf("\033[C");
+			}
+        }
+		printf("\n");
+    }
 }
