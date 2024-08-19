@@ -20,13 +20,17 @@ void main(){
         clear_screen();
         fill_field(matrix);
         fill_drone(matrix2);
-        drone_t drone0=init_drone(STOP,10,10,0);
+        drone_t matrix3[6]={init_drone(STOP,0,10,0), init_drone(STOP,0,12,0), init_drone(STOP,0,14,0),
+        init_drone(STOP,0,16,0), init_drone(STOP,0,18,0), init_drone(STOP,0,20,0)};
+
 
         while(1){
             
-            move_drone(matrix2, &drone0);
-            check_pump(matrix, &drone0);
-            score[0]=drone0.pumpkins;
+            for (int n=0; n<=game_mode; n++){
+                move_drone(matrix2, &matrix3[n]);
+                check_pump(matrix, &matrix3[n]);
+                score[n]=matrix3[n].pumpkins;
+            }
             print_field(matrix);
             print_drone(matrix2);   
             game_menu(game_mode, score);
@@ -34,13 +38,13 @@ void main(){
 
             if (kbhit()) {
             	char ch = getch();
-				if (ch=='w' || ch=='W') drone0.direction=UP;
-				if (ch=='a' || ch=='A') drone0.direction=LEFT;
-				if (ch=='s' || ch=='S') drone0.direction=DOWN;
-				if (ch=='d' || ch=='D') drone0.direction=RIGHT;
+				if (ch=='w' || ch=='W') matrix3[0].direction=UP;
+				if (ch=='a' || ch=='A') matrix3[0].direction=LEFT;
+				if (ch=='s' || ch=='S') matrix3[0].direction=DOWN;
+				if (ch=='d' || ch=='D') matrix3[0].direction=RIGHT;
 				if (ch=='p' || ch=='P'){
                     printf("GAME PAUSED. Press P to continue.");
-                    drone0.direction=STOP;
+                    matrix3[0].direction=STOP;
                     while (1){
                         if (kbhit()){
                             char ch = getch();
@@ -53,7 +57,7 @@ void main(){
                 }
 				if (ch=='q' || ch=='Q') break;;
             }
-            delay(300);
+            delay(150);
         }
     }
 }

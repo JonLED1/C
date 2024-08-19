@@ -51,12 +51,12 @@ int main_menu(){
   set_cursor(3,10);
   printf("-= PUMPKIN DRONE =-\n\n");
   printf("Game options:\n");
-  printf("1. Manual mode\n2. Automatic mode\n3. Exit\n");
+  printf("1. Single drone\n2. Multi drone\n3. Exit\n");
   while(1){
 		char ch = getch();
 		if (ch=='1') return 0;
 		if (ch=='2'){
-      printf("Select the number of drones (1-5)\n");
+      printf("Select the number of automatic drones (1-5)\n");
       while(1){
         char ch = getch();
         if (ch=='1') return 1;
@@ -81,8 +81,8 @@ int game_menu(int game_mode, int score[6]){
     printf("Score - %d\n", score[0]);
   }
   else{
-    printf("QUIT-Q PAUSE-P\n");
-    for (int i=1; i<=game_mode; i++){
+    printf("UP-W DOWN-S LEFT-A RIGHT-D QUIT-Q PAUSE-P\n");
+    for (int i=0; i<=game_mode; i++){
       printf("Score Drone %d - %d\n", i, score[i]);
     }
   }
