@@ -2,13 +2,8 @@
 #include <stdlib.h>
 
 #include "config.h"
-	
-typedef struct {
-	int direction;
-	int x;
-	int y;
-	int pumpkins;
-}  drone_t;
+#include "drone.h"
+#include "field.h"
 
 drone_t init_drone(int direction, int x, int y, int pumpkins){
 	drone_t drone;
@@ -72,4 +67,12 @@ void print_drone(char matrix2[MAX_X][MAX_Y]){
         }
 		printf("\n");
     }
+}
+
+void check_pump(char matrix[MAX_X][MAX_Y], drone_t *drone){
+	if (matrix[drone->x][drone->y]=='O'){
+		matrix[drone->x][drone->y]=' ';
+		drone->pumpkins=drone->pumpkins+1;
+	}
+	return;
 }

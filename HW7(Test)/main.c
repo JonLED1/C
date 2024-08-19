@@ -8,8 +8,6 @@
 #include "field.h"
 #include "drone.h"
 
-
-
 void main(){
     int game_mode=0;
     char matrix[MAX_X][MAX_Y];
@@ -27,9 +25,10 @@ void main(){
         while(1){
             
             move_drone(matrix2, &drone0);
+            check_pump(matrix, &drone0);
+            score[0]=drone0.pumpkins;
             print_field(matrix);
-            print_drone(matrix2);
-                    
+            print_drone(matrix2);   
             game_menu(game_mode, score);
             ripening_pumpkis(matrix);
 
