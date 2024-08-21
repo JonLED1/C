@@ -32,7 +32,7 @@ void print_field(char matrix[MAX_X][MAX_Y]){
     }
 }
 
-void ripening_pumpkis(char matrix[MAX_X][MAX_Y]){
+void ripening_pumpkis(char matrix[MAX_X][MAX_Y], int *ripe_pumpkins){
     //if (rand()%2!=1) return;
     while(1){
         int x = rand() % MAX_X;
@@ -43,6 +43,7 @@ void ripening_pumpkis(char matrix[MAX_X][MAX_Y]){
         }
         if (matrix[x][y]=='o'){
             matrix[x][y]='O';
+            *ripe_pumpkins=*ripe_pumpkins+1;
             break;
         }
     }

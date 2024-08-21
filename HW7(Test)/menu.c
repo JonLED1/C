@@ -51,7 +51,7 @@ int main_menu(){
   set_cursor(3,10);
   printf("-= PUMPKIN DRONE =-\n\n");
   printf("Game options:\n");
-  printf("1. Single drone\n2. Multi drone\n3. Exit\n");
+  printf("1. Single drone (training)\n2. Multi drone\n3. Exit\n");
   while(1){
 		char ch = getch();
 		if (ch=='1') return 0;

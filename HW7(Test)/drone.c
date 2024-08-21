@@ -69,10 +69,11 @@ void print_drone(char matrix2[MAX_X][MAX_Y]){
     }
 }
 
-void check_pump(char matrix[MAX_X][MAX_Y], drone_t *drone){
+void check_pump(char matrix[MAX_X][MAX_Y], drone_t *drone, int *taked_pumpkins){
 	if (matrix[drone->x][drone->y]=='O'){
 		matrix[drone->x][drone->y]=' ';
 		drone->pumpkins=drone->pumpkins+1;
+		*taked_pumpkins=*taked_pumpkins+1;
 	}
 	return;
 }
