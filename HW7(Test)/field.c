@@ -10,6 +10,7 @@ void fill_field(char matrix[MAX_X][MAX_Y]){
             matrix[i][j]='.';
         }
     }
+    //matrix[6][12]='O';
 }
 
 void print_field(char matrix[MAX_X][MAX_Y]){

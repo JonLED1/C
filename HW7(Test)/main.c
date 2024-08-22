@@ -28,6 +28,9 @@ void main(){
 
         while(1){
             for (int n=0; n<=game_mode; n++){
+                if (n>0){
+                    direction(matrix, &matrix3[n]);
+                }
                 move_drone(matrix2, &matrix3[n]);
                 check_pump(matrix, &matrix3[n], &taked_pumpkins);
                 score[n]=matrix3[n].pumpkins;
@@ -38,11 +41,18 @@ void main(){
             if (ripe_pumpkins<place_field){ //checking all ripe pumpkins
                 ripening_pumpkis(matrix, &ripe_pumpkins);
             }
-           // printf("%d", taked_pumpkins);
             if (taked_pumpkins==place_field){
                 printf("CONGRATULATIONS! All the pumpkins have been taken!\n");
+                //check for winner
+                int winner=0;
+                for (int n=0; n<game_mode; n++){
+                    if (matrix3[n].pumpkins>matrix3[n+1].pumpkins){
+                        winner=n;
+                    }
+                }
+                printf("Winner is drone N%d\n", winner);
                 printf("Press space to exit main menu.\n");
-                // write check for winner
+                
                 while (1){
                         if (kbhit()){
                             char ch = getch();
@@ -75,7 +85,7 @@ void main(){
                 }
 				if (ch=='q' || ch=='Q') break;;
             }
-            delay(50);
+            delay(5);
         }
     }
 }

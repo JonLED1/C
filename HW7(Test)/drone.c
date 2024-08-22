@@ -77,3 +77,64 @@ void check_pump(char matrix[MAX_X][MAX_Y], drone_t *drone, int *taked_pumpkins){
 	}
 	return;
 }
+
+void direction(char matrix[MAX_X][MAX_Y], drone_t *drone){
+	int x=drone->x;
+	int y=drone->y;
+	int left=1;
+	int right=1;
+	int up=1;
+	int down=1;
+
+	for (int i=y-1; i>0; i--){
+		if (matrix[x][i]=='O'){
+			right=100;
+			break;
+		}
+		else left++;
+	}
+
+	for (int i=y+1; i<MAX_Y; i++){
+		if (matrix[x][i]=='O'){
+			left=100;
+			break;
+		}
+		else right++;
+	}
+
+	for (int i=x-1; i>0; i--){
+		if (matrix[i][y]=='O'){
+			down=100;
+			break;
+		}
+		else up++;
+	}
+
+	for (int i=x+1; i<MAX_X; i++){
+		if (matrix[i][y]=='O'){
+			up=100;
+			break;
+		}
+		else down++;
+	}
+	
+	if ((left+right) != MAX_Y){
+		if (left<right){
+			drone->direction=LEFT;
+		}
+		else{
+			drone->direction=RIGHT;
+		}
+	}
+
+	if ((up+down) != MAX_X){
+		if (up<down){
+			drone->direction=UP;
+		}
+		else{
+			drone->direction=DOWN;
+		}
+	}
+	//printf("%d %d %d %d\n", left, right, up, down);
+	return;
+}
