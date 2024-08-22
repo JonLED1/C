@@ -5,12 +5,13 @@
 #include "drone.h"
 #include "field.h"
 
-drone_t init_drone(int direction, int x, int y, int pumpkins){
+drone_t init_drone(int direction, int x, int y, int pumpkins, char symbol){
 	drone_t drone;
 	drone.direction=direction;
 	drone.x = x;
 	drone.y = y;
 	drone.pumpkins = pumpkins;
+	drone.symbol = symbol;
 	return drone;
 }
 
@@ -48,7 +49,7 @@ void move_drone(char matrix2[MAX_X][MAX_Y], drone_t *drone){
 			drone->y = 0;
 		}
 	}
-	matrix2[drone->x][drone->y]='X';
+	matrix2[drone->x][drone->y]=drone->symbol;
 	return;
 }
 
@@ -59,7 +60,22 @@ void print_drone(char matrix2[MAX_X][MAX_Y]){
     for (int i=0; i<MAX_X; i++){
         for (int j=0; j<MAX_Y; j++){
             if (matrix2[i][j]=='X'){
-				printf("\x1b[31m%c\x1b[0m", matrix2[i][j]);
+				printf("\x1b[41m\x1b[37m%c\x1b[0m", matrix2[i][j]);
+            }
+			else if (matrix2[i][j]=='B'){
+				printf("\x1b[42m\x1b[37m%c\x1b[0m", matrix2[i][j]);
+            }
+			else if (matrix2[i][j]=='C'){
+				printf("\x1b[43m\x1b[37m%c\x1b[0m", matrix2[i][j]);
+            }
+			else if (matrix2[i][j]=='P'){
+				printf("\x1b[44m\x1b[37m%c\x1b[0m", matrix2[i][j]);
+            }
+			else if (matrix2[i][j]=='K'){
+				printf("\x1b[45m\x1b[37m%c\x1b[0m", matrix2[i][j]);
+            }
+			else if (matrix2[i][j]=='Z'){
+				printf("\x1b[47m\x1b[37m%c\x1b[0m", matrix2[i][j]);
             }
 			else{
 				printf("\033[C");
@@ -125,6 +141,7 @@ void direction(char matrix[MAX_X][MAX_Y], drone_t *drone){
 		else{
 			drone->direction=RIGHT;
 		}
+		return;
 	}
 
 	if ((up+down) != MAX_X-1){
@@ -134,7 +151,11 @@ void direction(char matrix[MAX_X][MAX_Y], drone_t *drone){
 		else{
 			drone->direction=DOWN;
 		}
+		return;
 	}
-	//printf("%d %d %d %d\n", left, right, up, down);
+
+	if (rand()%2!=1){
+		drone->direction=rand()%4+1;
+	}
 	return;
 }

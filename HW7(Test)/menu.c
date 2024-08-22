@@ -3,6 +3,9 @@
 #include <conio.h>
 #include <sys/time.h>
 
+#include "drone.h"
+#include "menu.h"
+
 void delay(unsigned milliseconds){
     clock_t pause;
     clock_t start;
@@ -74,16 +77,3 @@ int main_menu(){
 	}
 }
 
-int game_menu(int game_mode, int score[6]){
-  printf("_____________________________\n\n");
-  if (game_mode==0){
-    printf("UP-W DOWN-S LEFT-A RIGHT-D QUIT-Q PAUSE-P\n");
-    printf("Score - %d\n", score[0]);
-  }
-  else{
-    printf("UP-W DOWN-S LEFT-A RIGHT-D QUIT-Q PAUSE-P\n");
-    for (int i=0; i<=game_mode; i++){
-      printf("Score Drone %d - %d\n", i, score[i]);
-    }
-  }
-}

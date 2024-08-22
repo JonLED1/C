@@ -13,7 +13,6 @@ void main(){
     int place_field=MAX_X*MAX_Y;
     char matrix[MAX_X][MAX_Y];
     char matrix2[MAX_X][MAX_Y];
-    int score[6]={0};
     
     while(1){
         int ripe_pumpkins=0;
@@ -23,8 +22,8 @@ void main(){
         clear_screen();
         fill_field(matrix);
         fill_drone(matrix2);
-        drone_t matrix3[6]={init_drone(STOP,0,10,0), init_drone(STOP,0,12,0), init_drone(STOP,0,14,0),
-        init_drone(STOP,0,16,0), init_drone(STOP,0,18,0), init_drone(STOP,0,20,0)};
+        drone_t matrix3[6]={init_drone(STOP,0,10,0,'X'), init_drone(STOP,0,12,0,'B'), init_drone(STOP,0,14,0,'C'),
+        init_drone(STOP,0,16,0,'P'), init_drone(STOP,0,18,0,'K'), init_drone(STOP,0,20,0,'Z')};
 
         while(1){
             for (int n=0; n<=game_mode; n++){
@@ -33,11 +32,22 @@ void main(){
                 }
                 move_drone(matrix2, &matrix3[n]);
                 check_pump(matrix, &matrix3[n], &taked_pumpkins);
-                score[n]=matrix3[n].pumpkins;
             }
             print_field(matrix);
-            print_drone(matrix2);   
-            game_menu(game_mode, score);
+            print_drone(matrix2);
+            
+            printf("_____________________________\n\n");
+            if (game_mode==0){
+                printf("UP-W DOWN-S LEFT-A RIGHT-D QUIT-Q PAUSE-P\n");
+                printf("Drone %c take %d pumpkins\n", matrix3[0].symbol, matrix3[0].pumpkins);
+            }
+            else{
+                printf("UP-W DOWN-S LEFT-A RIGHT-D QUIT-Q PAUSE-P\n");
+                for (int n=0; n<=game_mode; n++){
+                    printf("Drone %c take %d pumpkins\n", matrix3[n].symbol, matrix3[n].pumpkins);
+                }
+            }
+
             if (ripe_pumpkins<place_field){ //checking all ripe pumpkins
                 ripening_pumpkis(matrix, &ripe_pumpkins);
             }
@@ -45,12 +55,14 @@ void main(){
                 printf("CONGRATULATIONS! All the pumpkins have been taken!\n");
                 //check for winner
                 int winner=0;
+                int max_pump=matrix3[0].pumpkins;
                 for (int n=0; n<game_mode; n++){
-                    if (matrix3[n].pumpkins>matrix3[n+1].pumpkins){
+                    if (matrix3[n].pumpkins>max_pump){
                         winner=n;
+                        max_pump=matrix3[n].pumpkins;
                     }
                 }
-                printf("Winner is drone N%d\n", winner);
+                printf("Winner is drone %C. He collected %d pumpkins\n", matrix3[winner].symbol, matrix3[winner].pumpkins);
                 printf("Press space to exit main menu.\n");
                 
                 while (1){
@@ -85,7 +97,7 @@ void main(){
                 }
 				if (ch=='q' || ch=='Q') break;;
             }
-            delay(300);
+            delay(200);
         }
     }
 }

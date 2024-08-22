@@ -8,6 +8,7 @@
         "menu.h": "c",
         "conio.h": "c",
         "field.h": "c",
-        "drone.h": "c"
+        "drone.h": "c",
+        "config.h": "c"
     }
 }
