@@ -85,7 +85,7 @@ void main(){
                 }
 				if (ch=='q' || ch=='Q') break;;
             }
-            delay(5);
+            delay(300);
         }
     }
 }

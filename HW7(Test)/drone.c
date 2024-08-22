@@ -135,6 +135,6 @@ void direction(char matrix[MAX_X][MAX_Y], drone_t *drone){
 			drone->direction=DOWN;
 		}
 	}
-	//printf("%d %d %d %d\n", left, right, up, down);
+	printf("%d %d %d %d\n", left, right, up, down);
 	return;
 }
